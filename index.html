@@ -1,86 +1,210 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Videy</title>
+  <title>Watch on Videy — Free and Simple Video Hosting</title>
   <meta name="referrer" content="no-referrer" />
   <style>
     :root{
-      --bg1:#eef4ff; --bg2:#f7fbff; --card:#ffffff; --border:#e6eefc;
-      --text:#0f172a; --muted:#64748b; --btn:#2563eb; --btnHover:#1d4ed8;
-      --shadow: 0 18px 40px rgba(15,23,42,.10); --radius:18px;
+      --bg:#0b1220;
+      --panel:#0f1a2e;
+      --panel2:#0c1629;
+      --text:#e7eefc;
+      --muted:#a8b6d4;
+      --border:rgba(255,255,255,.08);
+      --btn:#1e2b45;
+      --btnHover:#263654;
+      --primary:#2563eb;
+      --primaryHover:#1d4ed8;
+      --radius:14px;
     }
     *{box-sizing:border-box;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;}
-    body{margin:0;color:var(--text);background:linear-gradient(180deg,var(--bg1),var(--bg2));}
+    body{margin:0;background:radial-gradient(1200px 520px at 50% -10%, #1a2b4d 0%, var(--bg) 55%);color:var(--text);}
+    a{color:inherit;text-decoration:none}
     .wrap{max-width:980px;margin:0 auto;padding:16px 14px 28px;}
-    .ad-slot{border:1px solid var(--border);border-radius:14px;background:#ffffffcc;padding:12px;display:flex;align-items:center;justify-content:center;min-height:48px;overflow:hidden}
-    .header{display:flex;align-items:center;justify-content:space-between;padding:14px 2px 14px;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(180deg,#1d4ed8,#2563eb);color:#fff;display:grid;place-items:center;font-weight:900}
-    .uploadBtn{appearance:none;border:0;background:linear-gradient(180deg,#2563eb,#1d4ed8);color:#fff;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-    .videoShell{background:#000;border-bottom:1px solid var(--border)}
-    video{width:100%;height:auto;display:block;background:#000}
-    .content{padding:16px 18px 18px}
-    .title{font-size:18px;font-weight:900;margin:10px 0 8px}
-    .meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:13px;margin-bottom:14px}
-    .bigBtn{width:100%;appearance:none;border:0;border-radius:12px;background:var(--btn);color:#fff;font-weight:900;padding:14px 16px;cursor:pointer}
-    .error{display:none;margin-top:12px;color:#991b1b;background:#fee2e2;border:1px solid #fecaca;padding:10px 12px;border-radius:12px;font-size:13px}
-    .watermark{position:fixed;right:12px;bottom:10px;background:#fff;border:1px solid var(--border);padding:6px 10px;border-radius:10px;font-size:12px;color:var(--muted)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .logo{
+      width:34px;height:34px;border-radius:10px;
+      background:linear-gradient(180deg,#2b78ff,#2563eb);
+      display:grid;place-items:center;font-weight:900;color:white;
+      box-shadow:0 12px 30px rgba(37,99,235,.25);
+    }
+    .linkbtn{
+      appearance:none;border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:9px 12px;border-radius:10px;
+      cursor:pointer;font-weight:700;
+    }
+    .linkbtn:hover{background:rgba(255,255,255,.06)}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:0 22px 60px rgba(0,0,0,.35);
+    }
+    .videoShell{background:#000;border-bottom:1px solid var(--border);}
+    video{width:100%;height:auto;display:block;background:#000;}
+    .section{padding:14px 14px 16px;}
+    .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+    .btn{
+      appearance:none;border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:10px 12px;border-radius:12px;
+      cursor:pointer;font-weight:800;
+      display:inline-flex;align-items:center;gap:8px;
+    }
+    .btn:hover{background:rgba(255,255,255,.06)}
+    .btn.primary{
+      border-color:rgba(37,99,235,.45);
+      background:linear-gradient(180deg,var(--primary),var(--primaryHover));
+      box-shadow:0 14px 30px rgba(37,99,235,.22);
+    }
+    .btn.primary:hover{filter:brightness(1.03)}
+    .divider{height:1px;background:var(--border);margin:14px 0;}
+    .sharetitle{font-weight:900;margin:0 0 10px 0;color:var(--text);}
+    .sharebox{
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      padding:12px;border-radius:12px;
+    }
+    .url{
+      flex:1;min-width:220px;
+      padding:10px 12px;border-radius:10px;
+      background:rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      color:var(--muted);
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      font-size:13px;
+    }
+    .tiny{color:var(--muted);font-size:12px;line-height:1.35;margin-top:10px;}
+    .ad-slot{
+      margin-top:14px;
+      background:rgba(255,255,255,.03);
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:12px;
+      padding:14px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+    }
+    footer{margin-top:16px;color:var(--muted);font-size:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    footer a{opacity:.9}
+    .error{
+      display:none;
+      margin-top:12px;
+      background:rgba(239,68,68,.14);
+      border:1px solid rgba(239,68,68,.35);
+      color:#fecaca;
+      padding:10px 12px;border-radius:12px;
+      font-size:13px;
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <!-- TOP NATIVE BANNER -->
-    <div class="ad-slot" id="nativeTop">
-      <script async="async" data-cfasync="false" src="https://harbourbreederdump.com/54f40a4ce292a9187e0b9a0feb507f92/invoke.js"></script>
-      <div id="container-54f40a4ce292a9187e0b9a0feb507f92"></div>
-    </div>
-
-    <div class="header">
-      <div class="brand"><div class="logo">V</div><div>Videy</div></div>
-      <button class="uploadBtn" type="button">Upload Video</button>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">v</div>
+        <div>videy</div>
+      </div>
+      <button class="linkbtn" id="uploadBtn" type="button">Upload</button>
     </div>
 
     <div class="card">
       <div class="videoShell">
-        <video id="player" controls playsinline preload="metadata"></video>
+        <video id="player" controls playsinline preload="metadata">
+          Your browser does not support the video tag.
+        </video>
       </div>
-      <div class="content">
-        <div class="title">Sample Video</div>
-        <div class="meta">
-          <span>👁️ 1,234 views</span>
-          <span>📅 1/15/2024</span>
-          <span>💾 15.2 MB</span>
+
+      <div class="section">
+        <div class="error" id="errorBox">
+          Video could not load. This could be because the video was removed, your internet connection is down, the server is having issues, or the video might not have ever existed.
         </div>
-        <button class="bigBtn" id="downloadBtn">Download Video</button>
-        <div class="error" id="errorBox"></div>
+
+        <div class="btnrow" aria-label="Actions">
+          <button class="btn" id="shareBtn" type="button">Share Video</button>
+          <button class="btn" id="copyBtn" type="button">Copy Link</button>
+          <button class="btn" id="uploadBtn2" type="button">Upload</button>
+          <button class="btn" id="subscribeBtn" type="button">Subscribe</button>
+          <button class="btn" id="reportBtn" type="button">Report</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- USER REQUEST: replace "Share this link" area with a Download button (smartlink on click) -->
+        <h3 class="sharetitle">Download video</h3>
+        <div class="sharebox">
+          <div class="url" id="pageUrl"></div>
+          <button class="btn primary" id="downloadBtn" type="button">Download Video</button>
+        </div>
+
+        <div class="tiny">
+          Tip: Ganti ID di URL: <code>?id=LIWPZnsS1</code>. Jika sumber video berbeda, ubah pola CDN di <code>app.js</code>.
+        </div>
+
+        <!-- NATIVE BANNER SLOT (paste official code here) -->
+        <div class="ad-slot" id="nativeBannerSlot">
+		<script
+  async="async"
+  data-cfasync="false"
+  src="https://harbourbreederdump.com/54f40a4ce292a9187e0b9a0feb507f92/invoke.js"
+></script>
+<div id="container-54f40a4ce292a9187e0b9a0feb507f92"></div>
+		
+		</div>
       </div>
     </div>
 
-    <div class="ad-slot" style="margin-top:12px">
-      AD — Display Banner Placeholder
-    </div>
-  </div>
+    <!-- Bottom ad slot (optional) -->
+    <div class="ad-slot" id="bottomAdSlot">Bottom Ad Slot (optional)</div>
 
-  <div class="watermark">Made with Emergent</div>
+    <footer>
+      <div>Copyright © <span id="year"></span> videy.co</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#" id="tosLink">Terms of Service</a>
+        <a href="#" id="abuseLink">Report Abuse</a>
+      </div>
+    </footer>
 
-  <!-- POPUNDER -->
-  <script type="text/javascript" src="https://harbourbreederdump.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js"></script>
+   <!-- POPUNDER -->
+<script
+  type="text/javascript"
+  src="https://harbourbreederdump.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js">
+</script>
 
-  <!-- HISTATS -->
-  <script type="text/javascript">var _Hasync= _Hasync|| [];
+<!-- Histats.com START -->
+<script type="text/javascript">
+  var _Hasync = _Hasync || [];
   _Hasync.push(['Histats.start', '1,4654540,4,0,0,0,00010000']);
   _Hasync.push(['Histats.fasi', '1']);
   _Hasync.push(['Histats.track_hits', '']);
   (function() {
-    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    var hs = document.createElement('script');
+    hs.type = 'text/javascript';
+    hs.async = true;
     hs.src = ('//s10.histats.com/js15_as.js');
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-  })();</script>
-  <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4654540&101" alt="free web hit counter" border="0"></a></noscript>
+    (document.getElementsByTagName('head')[0] ||
+     document.getElementsByTagName('body')[0])
+     .appendChild(hs);
+  })();
+</script>
+<noscript>
+  <a href="/" target="_blank">
+    <img src="//sstatic1.histats.com/0.gif?4654540&101" border="0">
+  </a>
+</noscript>
+<!-- Histats.com END -->
+
 
   <script src="./app.js"></script>
+  </div>
 </body>
 </html>
