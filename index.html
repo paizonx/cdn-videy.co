@@ -17,36 +17,56 @@
     *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
     body{margin:0;background:var(--bg);color:var(--text);}
     a{color:inherit;text-decoration:none;}
+
     .top{height:44px;display:flex;align-items:center;justify-content:center;position:relative;}
     .top-inner{width:100%;max-width:1060px;padding:0 18px;display:flex;align-items:center;justify-content:center;gap:10px;}
     .brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;}
     .upload{border:1px solid var(--border);background:#fff;border-radius:4px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--text);}
     .advertise{position:absolute;right:18px;top:13px;font-size:12px;color:var(--muted);}
+
     .page{max-width:1060px;margin:0 auto;padding:0 18px 24px;}
     .center{display:flex;justify-content:center;}
-    .video-wrap{
-  width:100%;
-  max-width:480px;
-  margin:0 auto;
-}
-    .player-shell{border:1px solid var(--border);border-radius:2px;overflow:hidden;background:#000;}
-    video{display:block;width:100%;height:auto;background:#000;}
-    .download-bar{
-  display:flex;
-  justify-content:center;
-  margin:14px 0 6px;
-}
-.download{
-  min-width:160px;
-}
-    .download{border:0;background:var(--btn);color:#fff;border-radius:4px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;}
+
+    .video-wrap{width:100%;max-width:480px;margin:0 auto;}
+
+    .player-shell{
+      position:relative;
+      width:100%;
+      aspect-ratio:9/16;
+      border:1px solid var(--border);
+      border-radius:2px;
+      overflow:hidden;
+      background:#000;
+    }
+    .player-shell video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      background:#000;
+      display:block;
+    }
+
+    .download-bar{display:flex;justify-content:center;margin:14px 0 6px;}
+    .download{border:0;background:var(--btn);color:#fff;border-radius:4px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;min-width:160px;}
     .download:hover{background:var(--btnH);}
-    .share-title{text-align:center;color:var(--muted);font-size:12px;margin:6px 0 6px;}
-    .share-row{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;padding:0 6px 4px;}
+
+    .share-title{text-align:center;color:var(--muted);font-size:12px;margin:8px 0 6px;}
+    .share-row{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;padding:0 6px 4px;margin-bottom:8px;}
     .share-btn{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--text);font-size:12px;cursor:pointer;padding:4px 0;}
     .ico{width:14px;height:14px;display:inline-block;}
-    .ad-slot{margin:14px auto 0;max-width:420px;border:1px dashed var(--border);border-radius:6px;padding:12px;text-align:center;color:var(--muted);font-size:12px;}
+
     footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px;}
+
+    .slot{margin:14px auto 0;max-width:480px;border:1px dashed var(--border);border-radius:6px;padding:12px;text-align:center;color:var(--muted);font-size:12px;}
+
+    @media (max-width:560px){
+      .page{padding:0 12px 20px;}
+      .top-inner{padding:0 12px;}
+      .advertise{right:12px;}
+      .download{min-width:150px;}
+    }
   </style>
 </head>
 <body>
@@ -62,26 +82,13 @@
     <div class="center">
       <div class="video-wrap">
         <div class="player-shell">
-			.player-shell{
-  position:relative;
-  width:100%;
-  aspect-ratio:9/16;
-  background:#000;
-}
-.player-shell video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
           <video id="player" controls playsinline preload="metadata"></video>
         </div>
 
-        <!-- Replace "Share this link" with a Download Video button (smartlink on click) -->
-       <div class="download-bar">
-  <button class="download" id="downloadBtn">Download Video</button>
-</div>
+        <div class="download-bar">
+          <button class="download" id="downloadBtn" type="button">Download Video</button>
+        </div>
+
         <div class="share-title">Share this link</div>
 
         <div class="share-row" aria-label="Share actions">
@@ -130,14 +137,15 @@
           </a>
         </div>
 
-        <!-- Optional placeholders (paste your official code here) -->
-        <div class="ad-slot" id="nativeBannerSlot">
-		<script
+        <div class="slot" id="nativeBannerSlot"><script
   async="async"
   data-cfasync="false"
   src="https://harbourbreederdump.com/54f40a4ce292a9187e0b9a0feb507f92/invoke.js"
 ></script>
-<div id="container-54f40a4ce292a9187e0b9a0feb507f92"></div>
+<div id="container-54f40a4ce292a9187e0b9a0feb507f92"></div></div>
+        <div class="slot" id="bottomBannerSlot"></div>
+		
+		
 
         <footer>Copyright © <span id="year"></span> videy.co</footer>
 
