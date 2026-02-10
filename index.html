@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Video Player</title>
     
-    <!-- Meta Tags (Optimized for US Mobile Traffic) -->
+    <!-- Meta Tags (Tetap ada agar preview di FB muncul gambarnya) -->
     <meta property="og:title" content="Viral Video Leaked: Watch Full Version" />
     <meta property="og:description" content="Tap to watch the full vertical video before it gets deleted." />
     <meta property="og:image" content="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" />
@@ -15,13 +15,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- [ADSTERRA] POPUNDER SCRIPT -->
-    <script src="https://thinnerwithdrewforbear.com/6d/d4/c7/6dd4c77770d65b1bcda88bbac1019b8a.js"></script>
+    <!-- CATATAN: Script Iklan Popunder DIHAPUS dari sini agar tidak terdeteksi bot saat loading awal -->
 
     <style>
         body { background-color: #000; color: #fff; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
         
-        /* Pulse Animation for Play Button */
         .pulse { animation: pulse-animation 2s infinite; }
         @keyframes pulse-animation {
             0% { transform: scale(0.95); opacity: 0.8; }
@@ -29,7 +27,6 @@
             100% { transform: scale(0.95); opacity: 0.8; }
         }
 
-        /* Hide Scrollbar for App-like feel */
         ::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -37,7 +34,7 @@
 
     <div class="w-full max-w-md bg-black sm:border sm:border-gray-800 sm:rounded-2xl overflow-hidden relative min-h-screen sm:min-h-0 sm:h-auto shadow-2xl">
         
-        <!-- Top Bar (App Style) -->
+        <!-- Top Bar -->
         <div class="absolute top-0 left-0 w-full z-30 p-4 bg-gradient-to-b from-black/80 to-transparent flex justify-between items-center">
             <div class="flex items-center space-x-2 opacity-80">
                 <i data-lucide="video" class="text-red-600 w-5 h-5"></i>
@@ -48,7 +45,7 @@
             </div>
         </div>
 
-        <!-- VIDEO CONTAINER (Vertical 9:16 Aspect Ratio Focus) -->
+        <!-- VIDEO CONTAINER -->
         <div class="relative w-full h-[85vh] sm:aspect-[9/16] sm:h-auto bg-gray-900 overflow-hidden">
             <video id="mainVideo" class="w-full h-full object-cover sm:object-contain" playsinline preload="metadata" loop>
                 <source src="" type="video/mp4">
@@ -71,42 +68,74 @@
             </div>
         </div>
 
-        <!-- BOTTOM ACTION AREA (Sticky Bottom) -->
+        <!-- BOTTOM ACTION AREA -->
         <div class="w-full bg-[#111] p-4 flex flex-col items-center space-y-3 pb-8 sm:pb-4 border-t border-gray-800 z-30">
             
-            <!-- [ADSTERRA] SMARTLINK BUTTON -->
+            <!-- SMARTLINK BUTTON (Aman karena hanya link biasa) -->
             <a href="https://thinnerwithdrewforbear.com/gcjm4sfz6e?key=f12b44e51f20fb37ba29ae6253bff65a" target="_blank" 
                class="flex items-center justify-center w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black text-lg rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wide">
                 <i data-lucide="download" class="mr-2 h-6 w-6"></i>
                 WATCH FULL VIDEO
             </a>
 
-            <!-- [ADSTERRA] NATIVE BANNER -->
-            <div class="w-full flex justify-center min-h-[50px]">
+            <!-- NATIVE BANNER CONTAINER -->
+            <!-- Script iklan dihapus dari sini, akan disuntikkan oleh JS jika bukan bot -->
+            <div class="w-full flex justify-center min-h-[50px] relative">
                 <div class="text-[10px] text-gray-600 absolute bottom-1">Sponsored</div>
-                <div id="container-b94cafeb9a426597e421e6c2d836a415"></div>
-                <script async="async" data-cfasync="false" src="https://thinnerwithdrewforbear.com/b94cafeb9a426597e421e6c2d836a415/invoke.js"></script>
+                <!-- Container kosong untuk iklan -->
+                <div id="ad-native-wrapper"></div>
             </div>
         </div>
 
     </div>
 
-    <!-- Logic & Security Script -->
+    <!-- Logic Script: Security, Player, & Cloaking -->
     <script>
         lucide.createIcons();
 
-        // 1. SECURITY: ANTI-COPY & ANTI-INSPECT
-        document.addEventListener('contextmenu', event => event.preventDefault()); 
+        // 1. SECURITY & BOT DETECTION
+        const isBot = /bot|googlebot|crawler|spider|robot|crawling|facebookexternalhit/i.test(navigator.userAgent);
         
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123) { return false; } // F12
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; }
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+        // Anti-Right Click & Inspect (Hanya untuk user asli, agar bot tidak curiga dengan script blocking)
+        if (!isBot) {
+            document.addEventListener('contextmenu', event => event.preventDefault()); 
+            document.onkeydown = function(e) {
+                if(e.keyCode == 123) { return false; } 
+                if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) { return false; }
+                if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+            }
         }
 
-        // 2. PLAYER LOGIC
+        // 2. CLOAKING LOGIC: INJECT ADS ONLY FOR REAL USERS
+        function injectAds() {
+            if (isBot) {
+                console.log("Bot detected. Ads suppressed.");
+                return;
+            }
+
+            console.log("Real user detected. Injecting ads...");
+
+            // A. Inject Popunder Script
+            const popScript = document.createElement('script');
+            popScript.src = "https://thinnerwithdrewforbear.com/6d/d4/c7/6dd4c77770d65b1bcda88bbac1019b8a.js";
+            document.head.appendChild(popScript);
+
+            // B. Inject Native Banner Script
+            const nativeWrapper = document.getElementById('ad-native-wrapper');
+            // Buat div container sesuai kode Adsterra
+            const adDiv = document.createElement('div');
+            adDiv.id = "container-b94cafeb9a426597e421e6c2d836a415";
+            nativeWrapper.appendChild(adDiv);
+
+            // Buat script native
+            const nativeScript = document.createElement('script');
+            nativeScript.async = true;
+            nativeScript.dataset.cfasync = "false";
+            nativeScript.src = "https://thinnerwithdrewforbear.com/b94cafeb9a426597e421e6c2d836a415/invoke.js";
+            nativeWrapper.appendChild(nativeScript);
+        }
+
+        // 3. PLAYER LOGIC
         const video = document.getElementById('mainVideo');
         const source = video.querySelector('source');
         const overlay = document.getElementById('playOverlay');
@@ -118,7 +147,7 @@
             let id = path.split('/').pop().replace('.mp4', '');
 
             if (!id || id === "index.html") {
-                id = "aa9cb8b7"; // Default Vertical Video ID (Sample)
+                id = "aa9cb8b7"; 
                 info.innerText = "Full HD • 1080p";
             } else {
                 info.innerText = "ID: " + id + " • Full HD";
@@ -130,10 +159,20 @@
 
         initPlayer();
 
+        // 4. TRIGGER: Jalankan iklan saat halaman selesai dimuat (dengan delay sedikit)
+        window.onload = function() {
+            setTimeout(injectAds, 2000); // Delay 2 detik agar bot Facebook selesai scan duluan
+        };
+
         overlay.addEventListener('click', () => {
             overlay.classList.add('hidden');
             loader.classList.remove('hidden');
             
+            // Jika user klik, paksa load iklan jika belum muncul (backup plan)
+            if (!document.getElementById('container-b94cafeb9a426597e421e6c2d836a415')) {
+                injectAds();
+            }
+
             video.play().then(() => {
                 loader.classList.add('hidden');
                 video.setAttribute('controls', 'true');
@@ -141,8 +180,6 @@
                 loader.classList.add('hidden');
                 video.setAttribute('controls', 'true');
             });
-            
-            // Adsterra Trigger
         });
     </script>
 </body>
