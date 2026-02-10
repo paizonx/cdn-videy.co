@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Video Player</title>
     
-    <!-- Meta Tags (Optimized for US Audience) -->
+    <!-- Meta Tags (Optimized for US Mobile Traffic) -->
     <meta property="og:title" content="Viral Video Leaked: Watch Full Version" />
-    <meta property="og:description" content="Click to watch the full video before it gets deleted." />
+    <meta property="og:description" content="Tap to watch the full vertical video before it gets deleted." />
     <meta property="og:image" content="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" />
     <meta property="og:type" content="video.other" />
 
@@ -19,38 +19,50 @@
     <script src="https://thinnerwithdrewforbear.com/6d/d4/c7/6dd4c77770d65b1bcda88bbac1019b8a.js"></script>
 
     <style>
-        body { background-color: #000; color: #fff; user-select: none; -webkit-user-select: none; } /* Mencegah blok teks */
+        body { background-color: #000; color: #fff; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+        
+        /* Pulse Animation for Play Button */
         .pulse { animation: pulse-animation 2s infinite; }
         @keyframes pulse-animation {
-            0% { transform: scale(0.95); opacity: 0.7; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.7; }
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
         }
+
+        /* Hide Scrollbar for App-like feel */
+        ::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 font-sans bg-black" oncontextmenu="return false;">
+<body class="min-h-screen flex flex-col items-center justify-start sm:justify-center p-0 sm:p-4 font-sans bg-black" oncontextmenu="return false;">
 
-    <div class="w-full max-w-2xl space-y-4">
+    <div class="w-full max-w-md bg-black sm:border sm:border-gray-800 sm:rounded-2xl overflow-hidden relative min-h-screen sm:min-h-0 sm:h-auto shadow-2xl">
         
-        <!-- Header -->
-        <div class="flex items-center justify-center space-x-2 opacity-70 mb-2">
-            <i data-lucide="play-circle" class="text-red-600"></i>
-            <span class="text-xs font-bold tracking-widest text-gray-400">VIDEY PLAYER</span>
+        <!-- Top Bar (App Style) -->
+        <div class="absolute top-0 left-0 w-full z-30 p-4 bg-gradient-to-b from-black/80 to-transparent flex justify-between items-center">
+            <div class="flex items-center space-x-2 opacity-80">
+                <i data-lucide="video" class="text-red-600 w-5 h-5"></i>
+                <span class="text-xs font-bold tracking-widest text-white drop-shadow-md">PRIVATE VIDEO</span>
+            </div>
+            <div class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">
+                LIVE
+            </div>
         </div>
 
-        <!-- VIDEO CONTAINER -->
-        <div class="relative w-full aspect-video bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
-            <video id="mainVideo" class="w-full h-full object-contain" playsinline preload="metadata">
+        <!-- VIDEO CONTAINER (Vertical 9:16 Aspect Ratio Focus) -->
+        <div class="relative w-full h-[85vh] sm:aspect-[9/16] sm:h-auto bg-gray-900 overflow-hidden">
+            <video id="mainVideo" class="w-full h-full object-cover sm:object-contain" playsinline preload="metadata" loop>
                 <source src="" type="video/mp4">
             </video>
 
             <!-- PLAY OVERLAY -->
-            <div id="playOverlay" class="absolute inset-0 flex items-center justify-center bg-black/60 cursor-pointer z-20 backdrop-blur-sm hover:bg-black/50 transition">
-                <div class="relative pulse">
-                    <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg border-2 border-white/20">
-                        <i data-lucide="play" class="w-10 h-10 text-white fill-current ml-1"></i>
+            <div id="playOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 cursor-pointer z-20 backdrop-blur-[2px] hover:bg-black/30 transition">
+                <div class="relative pulse mb-4">
+                    <div class="w-24 h-24 bg-red-600/90 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(220,38,38,0.6)] border-4 border-white/20">
+                        <i data-lucide="play" class="w-12 h-12 text-white fill-white ml-2"></i>
                     </div>
                 </div>
+                <p class="text-white font-bold text-lg drop-shadow-lg tracking-wide">TAP TO PLAY</p>
+                <p id="videoInfo" class="text-gray-300 text-xs mt-2 font-mono bg-black/50 px-3 py-1 rounded-full">Loading ID...</p>
             </div>
 
             <!-- Loader -->
@@ -59,23 +71,22 @@
             </div>
         </div>
 
-        <!-- Info -->
-        <div class="text-center">
-            <p id="videoInfo" class="text-xs text-gray-500 font-mono mt-1">Ready to play...</p>
-        </div>
+        <!-- BOTTOM ACTION AREA (Sticky Bottom) -->
+        <div class="w-full bg-[#111] p-4 flex flex-col items-center space-y-3 pb-8 sm:pb-4 border-t border-gray-800 z-30">
+            
+            <!-- [ADSTERRA] SMARTLINK BUTTON -->
+            <a href="https://thinnerwithdrewforbear.com/gcjm4sfz6e?key=f12b44e51f20fb37ba29ae6253bff65a" target="_blank" 
+               class="flex items-center justify-center w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black text-lg rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wide">
+                <i data-lucide="download" class="mr-2 h-6 w-6"></i>
+                WATCH FULL VIDEO
+            </a>
 
-        <!-- [ADSTERRA] SMARTLINK BUTTON -->
-        <a href="https://thinnerwithdrewforbear.com/gcjm4sfz6e?key=f12b44e51f20fb37ba29ae6253bff65a" target="_blank" 
-           class="flex items-center justify-center w-full py-4 bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold rounded shadow-lg transform active:scale-95 transition-all uppercase tracking-wide">
-            <i data-lucide="download" class="mr-2 h-5 w-5"></i>
-            WATCH FULL VIDEO / DOWNLOAD
-        </a>
-
-        <!-- [ADSTERRA] NATIVE BANNER -->
-        <div class="mt-4 p-4 bg-[#111] rounded border border-gray-800 flex flex-col items-center justify-center">
-            <p class="text-[10px] text-gray-600 uppercase mb-2 tracking-widest self-start w-full text-center">Sponsored Content</p>
-            <div id="container-b94cafeb9a426597e421e6c2d836a415"></div>
-            <script async="async" data-cfasync="false" src="https://thinnerwithdrewforbear.com/b94cafeb9a426597e421e6c2d836a415/invoke.js"></script>
+            <!-- [ADSTERRA] NATIVE BANNER -->
+            <div class="w-full flex justify-center min-h-[50px]">
+                <div class="text-[10px] text-gray-600 absolute bottom-1">Sponsored</div>
+                <div id="container-b94cafeb9a426597e421e6c2d836a415"></div>
+                <script async="async" data-cfasync="false" src="https://thinnerwithdrewforbear.com/b94cafeb9a426597e421e6c2d836a415/invoke.js"></script>
+            </div>
         </div>
 
     </div>
@@ -85,11 +96,10 @@
         lucide.createIcons();
 
         // 1. SECURITY: ANTI-COPY & ANTI-INSPECT
-        document.addEventListener('contextmenu', event => event.preventDefault()); // Matikan Klik Kanan
+        document.addEventListener('contextmenu', event => event.preventDefault()); 
         
         document.onkeydown = function(e) {
-            // Matikan F12, Ctrl+U, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-            if(e.keyCode == 123) { return false; }
+            if(e.keyCode == 123) { return false; } // F12
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; }
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
@@ -108,10 +118,10 @@
             let id = path.split('/').pop().replace('.mp4', '');
 
             if (!id || id === "index.html") {
-                id = "aa9cb8b7"; 
-                info.innerText = "Default Mode";
+                id = "aa9cb8b7"; // Default Vertical Video ID (Sample)
+                info.innerText = "Full HD • 1080p";
             } else {
-                info.innerHTML = "Playing ID: <span class='text-red-500'>" + id + "</span>";
+                info.innerText = "ID: " + id + " • Full HD";
             }
 
             source.src = `https://cdn.videy.co/${id}.mp4`;
@@ -131,6 +141,8 @@
                 loader.classList.add('hidden');
                 video.setAttribute('controls', 'true');
             });
+            
+            // Adsterra Trigger
         });
     </script>
 </body>
