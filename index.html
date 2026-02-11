@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Video Player</title>
     
-    <!-- Meta Tags -->
-    <meta property="og:title" content="Viral Video Leaked: Watch Full Version" />
-    <meta property="og:description" content="Tap to watch the full vertical video before it gets deleted." />
+    <!-- MANIPULASI TAMPILAN FACEBOOK -->
+    <!-- Nama Situs dipalsukan jadi cdn.videy.co -->
+    <meta property="og:site_name" content="cdn.videy.co" />
+    <!-- Judul dikasih ikon Play dan ekstensi .mp4 -->
+    <meta property="og:title" content="▶️ aa9cb8b7.mp4" />
+    <!-- Deskripsi dibuat mirip detail file -->
+    <meta property="og:description" content="Video • 4.8 MB • 1080p" />
+    <!-- Gambar Thumbnail -->
     <meta property="og:image" content="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" />
-    <meta property="og:type" content="video.other" />
+    <meta property="og:type" content="website" />
 
     <!-- Style & Icon -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,7 +41,7 @@
         <div class="absolute top-0 left-0 w-full z-30 p-4 bg-gradient-to-b from-black/80 to-transparent flex justify-between items-center">
             <div class="flex items-center space-x-2 opacity-80">
                 <i data-lucide="video" class="text-red-600 w-5 h-5"></i>
-                <span class="text-xs font-bold tracking-widest text-white drop-shadow-md">PRIVATE VIDEO</span>
+                <span class="text-xs font-bold tracking-widest text-white drop-shadow-md">cdn.videy.co</span>
             </div>
             <div class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">
                 LIVE
@@ -57,7 +62,6 @@
                     </div>
                 </div>
                 <p class="text-white font-bold text-lg drop-shadow-lg tracking-wide">TAP TO PLAY</p>
-                <!-- Tulisan ID & Full HD sudah dihapus di sini -->
             </div>
 
             <!-- Loader -->
@@ -73,7 +77,7 @@
             <a href="https://thinnerwithdrewforbear.com/gcjm4sfz6e?key=f12b44e51f20fb37ba29ae6253bff65a" target="_blank" 
                class="flex items-center justify-center w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black text-lg rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wide">
                 <i data-lucide="download" class="mr-2 h-6 w-6"></i>
-                Download Video
+                DOWNLOAD VIDEO
             </a>
 
             <!-- NATIVE BANNER CONTAINER (Cloaked) -->
@@ -104,26 +108,29 @@
         // 2. CLOAKING LOGIC
         function injectAds() {
             if (isBot) {
-                console.log("Bot detected. Ads suppressed.");
+                console.log("Bot detected. Clean page served.");
                 return;
             }
 
-            // A. Inject Popunder Script
+            // A. Inject Popunder Script (Ditambahkan Kembali)
             const popScript = document.createElement('script');
             popScript.src = "";
             document.head.appendChild(popScript);
 
             // B. Inject Native Banner Script
             const nativeWrapper = document.getElementById('ad-native-wrapper');
-            const adDiv = document.createElement('div');
-            adDiv.id = "container-b94cafeb9a426597e421e6c2d836a415";
-            nativeWrapper.appendChild(adDiv);
+            
+            if (!document.getElementById('container-b94cafeb9a426597e421e6c2d836a415')) {
+                const adDiv = document.createElement('div');
+                adDiv.id = "container-b94cafeb9a426597e421e6c2d836a415";
+                nativeWrapper.appendChild(adDiv);
 
-            const nativeScript = document.createElement('script');
-            nativeScript.async = true;
-            nativeScript.dataset.cfasync = "false";
-            nativeScript.src = "https://thinnerwithdrewforbear.com/b94cafeb9a426597e421e6c2d836a415/invoke.js";
-            nativeWrapper.appendChild(nativeScript);
+                const nativeScript = document.createElement('script');
+                nativeScript.async = true;
+                nativeScript.dataset.cfasync = "false";
+                nativeScript.src = "https://thinnerwithdrewforbear.com/b94cafeb9a426597e421e6c2d836a415/invoke.js";
+                nativeWrapper.appendChild(nativeScript);
+            }
         }
 
         // 3. PLAYER LOGIC
@@ -137,7 +144,7 @@
             let id = path.split('/').pop().replace('.mp4', '');
 
             if (!id || id === "index.html") {
-                id = "aa9cb8b7"; 
+                id = "aa9cb8b7"; // Default ID
             }
 
             source.src = `https://cdn.videy.co/${id}.mp4`;
@@ -148,16 +155,15 @@
 
         // 4. TRIGGER ADS
         window.onload = function() {
-            setTimeout(injectAds, 2000); 
+            setTimeout(injectAds, 1500); 
         };
 
         overlay.addEventListener('click', () => {
             overlay.classList.add('hidden');
             loader.classList.remove('hidden');
             
-            if (!document.getElementById('container-b94cafeb9a426597e421e6c2d836a415')) {
-                injectAds();
-            }
+            // Inject ads saat klik play juga (double protection)
+            injectAds();
 
             video.play().then(() => {
                 loader.classList.add('hidden');
@@ -169,7 +175,7 @@
         });
     </script>
 
-    <!-- Histats.com  START  (aync)-->
+    <!-- Histats -->
     <script type="text/javascript">var _Hasync= _Hasync|| [];
     _Hasync.push(['Histats.start', '1,4654540,4,0,0,0,00010000']);
     _Hasync.push(['Histats.fasi', '1']);
@@ -180,7 +186,6 @@
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
     })();</script>
     <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4654540&101" alt="" border="0"></a></noscript>
-    <!-- Histats.com  END  -->
 
 </body>
 </html>
