@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PRIVATE VIDEO</title>
+    <title>Video Player</title>
     
     <!-- MANIPULASI TAMPILAN FACEBOOK -->
     <meta property="og:site_name" content="CDN.VIDEY.CO" />
-    <meta property="og:title" content="aa9cb8b7.mp4" />
+    <meta property="og:title" content="Video_Viral.mp4" /> <!-- Judul umum agar masuk ke semua video -->
     <meta property="og:description" content="Video • 4.8 MB • 1080p • Full HD" />
     
-    <!-- GAMBAR: Menggunakan file tombolplay.jpg yang Anda upload -->
-    <!-- Pastikan domain di bawah ini sesuai dengan domain Anda (vidley.pw) -->
+    <!-- GAMBAR THUMBNAIL -->
     <meta property="og:image" content="https://vidley.pw/tombolplay.jpg" />
     <meta property="og:type" content="video.other" />
     <meta property="og:image:width" content="600" />
@@ -22,7 +21,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Ubah Background jadi Putih */
+        /* Background Putih */
         body { background-color: #ffffff; color: #333; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
         
         .pulse { animation: pulse-animation 2s infinite; }
@@ -39,13 +38,13 @@
 
     <div class="w-full max-w-md bg-white sm:border sm:border-gray-200 sm:rounded-2xl overflow-hidden relative min-h-screen sm:min-h-0 sm:h-auto shadow-2xl">
         
-        <!-- Top Bar (Clean Style) -->
+        <!-- Top Bar -->
         <div class="absolute top-0 left-0 w-full z-30 p-4 bg-gradient-to-b from-white/90 to-transparent flex justify-between items-center">
             <div class="flex items-center space-x-2 opacity-90">
                 <div class="bg-red-600 rounded-md p-1">
                     <i data-lucide="play" class="text-white w-3 h-3 fill-current"></i>
                 </div>
-                <span class="text-xs font-bold tracking-widest text-gray-800 drop-shadow-sm font-mono">PRIVATE VIDEO</span>
+                <span class="text-xs font-bold tracking-widest text-gray-800 drop-shadow-sm font-mono">CDN.VIDEY.CO</span>
             </div>
             <div class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse shadow-md">
                 LIVE
@@ -53,10 +52,10 @@
         </div>
 
         <!-- VIDEO CONTAINER -->
-        <!-- Background video tetap gelap agar kontras, tapi border menyesuaikan -->
         <div class="relative w-full h-[85vh] sm:aspect-[9/16] sm:h-auto bg-black overflow-hidden group">
             <video id="mainVideo" class="w-full h-full object-cover sm:object-contain" playsinline preload="metadata" loop>
-                <source src="" type="video/mp4">
+                <!-- Hapus type="video/mp4" agar browser otomatis mendeteksi format .mov atau .mp4 -->
+                <source src="">
             </video>
 
             <!-- PLAY OVERLAY -->
@@ -75,7 +74,7 @@
             </div>
         </div>
 
-        <!-- BOTTOM ACTION AREA (White Theme) -->
+        <!-- BOTTOM ACTION AREA -->
         <div class="w-full bg-white p-4 flex flex-col items-center space-y-3 pb-8 sm:pb-4 border-t border-gray-100 z-30">
             
             <!-- SMARTLINK BUTTON -->
@@ -138,7 +137,7 @@
             }
         }
 
-        // 3. PLAYER LOGIC
+        // 3. PLAYER LOGIC (UPDATED UNTUK MOV)
         const video = document.getElementById('mainVideo');
         const source = video.querySelector('source');
         const overlay = document.getElementById('playOverlay');
@@ -146,13 +145,21 @@
 
         function initPlayer() {
             const path = window.location.pathname;
-            let id = path.split('/').pop().replace('.mp4', '');
+            // Ambil nama file utuh dari URL (misal: ukkyfEPB2.mov atau aa9cb8b7.mp4)
+            let filename = path.split('/').pop();
 
-            if (!id || id === "index.html") {
-                id = "aa9cb8b7"; 
+            if (!filename || filename === "index.html" || filename === "") {
+                // Default jika tidak ada ID
+                source.src = "https://cdn.videy.co/aa9cb8b7.mp4";
+            } else {
+                // Jika URL sudah ada titik (ekstensi), pakai langsung (misal: .mov)
+                if (filename.includes('.')) {
+                    source.src = `https://cdn.videy.co/${filename}`;
+                } else {
+                    // Jika tidak ada titik, tambahkan .mp4 otomatis
+                    source.src = `https://cdn.videy.co/${filename}.mp4`;
+                }
             }
-
-            source.src = `https://cdn.videy.co/${id}.mp4`;
             video.load();
         }
 
