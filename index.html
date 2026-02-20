@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Videy - Full Cuan</title>
+    <title>Videy - Premium Streaming</title>
     
     <!-- MANIPULASI TAMPILAN FACEBOOK -->
     <meta property="og:site_name" content="CDN.VIDEY.CO" />
@@ -29,6 +29,8 @@
         ::-webkit-scrollbar { display: none; }
         .video-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .video-card:active { transform: scale(0.95); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="min-h-screen font-sans" oncontextmenu="return false;">
@@ -36,7 +38,7 @@
     <!-- ========================================== -->
     <!-- 1. HALAMAN UTAMA (BEBAS IKLAN UNTUK BOT)   -->
     <!-- ========================================== -->
-    <div id="homeView" class="hidden flex-col w-full min-h-screen pb-10 bg-gray-50">
+    <div id="homeView" class="hidden flex-col w-full min-h-screen pb-10 bg-gray-100">
         
         <!-- Navbar -->
         <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-gray-200">
@@ -45,7 +47,7 @@
                     <div class="bg-red-600 rounded p-1.5 shadow-sm">
                         <i data-lucide="play" class="text-white w-4 h-4 fill-current"></i>
                     </div>
-                    <span class="font-black text-gray-900 tracking-widest text-lg">VIDEY</span>
+                    <span class="font-black text-gray-900 tracking-widest text-lg">PRIVATE VIDEO</span>
                 </div>
                 <div class="bg-gray-100 p-2 rounded-full cursor-pointer hover:bg-gray-200 transition">
                     <i data-lucide="search" class="w-5 h-5 text-gray-500"></i>
@@ -55,66 +57,21 @@
 
         <!-- Kategori / Tags -->
         <div class="max-w-5xl mx-auto w-full px-4 pt-4 pb-2 flex space-x-2 overflow-x-auto hide-scrollbar">
-            <span class="px-4 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full whitespace-nowrap cursor-pointer">For You</span>
-            <span class="px-4 py-1.5 bg-gray-200 text-gray-700 hover:bg-gray-300 transition text-xs font-bold rounded-full whitespace-nowrap cursor-pointer">Trending</span>
-            <span class="px-4 py-1.5 bg-gray-200 text-gray-700 hover:bg-gray-300 transition text-xs font-bold rounded-full whitespace-nowrap cursor-pointer">New Updates</span>
-            <span class="px-4 py-1.5 bg-gray-200 text-gray-700 hover:bg-gray-300 transition text-xs font-bold rounded-full whitespace-nowrap cursor-pointer">Popular</span>
+            <span class="px-5 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full whitespace-nowrap cursor-pointer">For You</span>
+            <span class="px-5 py-1.5 bg-white text-gray-700 hover:bg-gray-200 transition text-xs font-bold rounded-full whitespace-nowrap border border-gray-200 cursor-pointer">Trending</span>
+            <span class="px-5 py-1.5 bg-white text-gray-700 hover:bg-gray-200 transition text-xs font-bold rounded-full whitespace-nowrap border border-gray-200 cursor-pointer">Exclusive</span>
+            <span class="px-5 py-1.5 bg-white text-gray-700 hover:bg-gray-200 transition text-xs font-bold rounded-full whitespace-nowrap border border-gray-200 cursor-pointer">Popular</span>
         </div>
 
         <!-- Grid Video (Auto Generate) -->
-        <main class="flex-1 max-w-5xl mx-auto w-full p-4">
-            <div id="videoGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 mb-12">
+        <main class="flex-1 max-w-5xl mx-auto w-full p-3 sm:p-4">
+            <!-- Grid dibuat lebih rapat dan vertikal untuk Mobile -->
+            <div id="videoGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mb-12">
                 <!-- Daftar video akan dimunculkan di sini oleh JavaScript (dari data.js) -->
-            </div>
-
-            <!-- KEISTIMEWAAN WEBSITE (Bagus untuk Trust Score FB & Info Pemilik) -->
-            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 mt-8 mb-4">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-black text-gray-900 mb-2">Platform Features</h2>
-                    <p class="text-sm text-gray-500">Why this system is built for performance and security.</p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-red-100 p-3 rounded-xl text-red-600">
-                            <i data-lucide="shield-check" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-900">Anti-Clone & Bot Protection</h3>
-                            <p class="text-xs text-gray-500 mt-1">Sistem dilengkapi dengan Client-Side Cloaking. Source code dilindungi dari copy-paste, dan bot sosial media (FB/Google) hanya akan melihat halaman bersih yang aman dari blokir.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-red-100 p-3 rounded-xl text-red-600">
-                            <i data-lucide="smartphone" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-900">Smart Auto-Resolution</h3>
-                            <p class="text-xs text-gray-500 mt-1">Otomatis menyesuaikan ukuran video. Format <b>Landscape</b> tidak akan terpotong (object-contain) dan format <b>Portrait (9:16)</b> akan mengisi penuh layar HP pengguna.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-red-100 p-3 rounded-xl text-red-600">
-                            <i data-lucide="file-video" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-900">Universal Format Support</h3>
-                            <p class="text-xs text-gray-500 mt-1">Mendukung pemutaran file secara otomatis. Pengguna dapat memutar video berekstensi <b>.MP4</b> maupun <b>.MOV</b> langsung dari server CDN Videy.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-red-100 p-3 rounded-xl text-red-600">
-                            <i data-lucide="zap" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-900">Optimized Ad-Engine</h3>
-                            <p class="text-xs text-gray-500 mt-1">Sistem injeksi iklan Adsterra yang aman. Menggunakan Smartlink dan Overlay Click-Trigger untuk Popunder, menjamin CTR tinggi tanpa memicu peringatan spam.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
             
             <footer class="text-center text-xs text-gray-400 mt-8 pb-4">
-                &copy; 2026 Videy CDN Network. Secured by Cloudflare.
+                &copy; 2026 Videy Premium Streaming. All rights reserved.
             </footer>
         </main>
     </div>
@@ -172,14 +129,14 @@
             <!-- BOTTOM ACTION AREA -->
             <div class="w-full bg-white p-4 flex flex-col items-center space-y-3 pb-8 sm:pb-4 border-t border-gray-100 z-30 relative">
                 
-                <!-- SMARTLINK BUTTON (UPDATE DARI PHYSICALLYLEE.COM) -->
+                <!-- SMARTLINK BUTTON -->
                 <a href="https://physicallylee.com/xxih11wz?key=f34388748a7d98860b1db63830c66151" target="_blank" 
                    class="flex items-center justify-center w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black text-lg rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wide border-b-4 border-red-800">
                     <i data-lucide="download" class="mr-2 h-6 w-6"></i>
                     TRENDING X`VIDEO
                 </a>
 
-                <!-- NATIVE BANNER CONTAINER (UPDATE ID DARI PHYSICALLYLEE.COM) -->
+                <!-- NATIVE BANNER CONTAINER -->
                 <div class="w-full flex justify-center min-h-[50px] relative">
                     <div class="text-[10px] text-gray-400 absolute bottom-1">Sponsored</div>
                     <div id="ad-native-wrapper"></div>
@@ -211,7 +168,7 @@
             }
         }
 
-        // 2. CLOAKING LOGIC (UPDATE SCRIPT IKLAN BARU)
+        // 2. CLOAKING LOGIC (IKLAN ADSTERRA)
         function injectAds() {
             if (isBot) return; // Aman dari bot FB
 
@@ -222,7 +179,6 @@
 
             // B. Inject Native Banner Script Baru
             const nativeWrapper = document.getElementById('ad-native-wrapper');
-            // Cek id container iklan yang baru: container-dab5d294c7141f053a3a03ad471d3d4e
             if (!document.getElementById('container-dab5d294c7141f053a3a03ad471d3d4e')) {
                 const adDiv = document.createElement('div');
                 adDiv.id = "container-dab5d294c7141f053a3a03ad471d3d4e";
@@ -236,7 +192,7 @@
             }
         }
 
-        // 3. FUNGSI RENDER HALAMAN UTAMA (AUTO THUMBNAIL)
+        // 3. FUNGSI RENDER HALAMAN UTAMA (VERTIKAL MOBILE OPTIMIZED)
         function renderHome() {
             const grid = document.getElementById('videoGrid');
             grid.innerHTML = ''; 
@@ -250,25 +206,26 @@
                 let filename = id.includes('.') ? id : `${id}.mp4`;
                 let videoUrl = `https://cdn.videy.co/${filename}`;
                 
-                let autoTitle = `Viral Video Archive #${index + 1}`;
+                let autoTitle = `Premium Viral Content #${index + 1}`;
                 let autoViews = Math.floor(Math.random() * (1500 - 100) + 100) + "K views";
 
                 const card = document.createElement('a');
                 card.href = `/${id}`; 
-                card.className = "video-card bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col cursor-pointer";
+                card.className = "video-card bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 flex flex-col cursor-pointer";
                 
-                // Ambil Frame detik 1.0 sebagai thumbnail
+                // MENGGUNAKAN ASPECT-[9/16] AGAR GAMBARNYA VERTIKAL
                 card.innerHTML = `
-                    <div class="relative aspect-[4/5] sm:aspect-video w-full bg-gray-900 overflow-hidden">
+                    <div class="relative aspect-[9/16] w-full bg-gray-900 overflow-hidden">
                         <video src="${videoUrl}#t=1.0" class="w-full h-full object-cover opacity-90" preload="metadata" muted playsinline></video>
+                        <div class="absolute top-2 left-2 bg-red-600 text-white text-[9px] px-1.5 py-0.5 rounded-sm font-bold tracking-wider z-10 shadow-sm">PREMIUM</div>
                         <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded font-mono z-10">HD</div>
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/20 z-10">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/30 z-10">
                             <div class="bg-red-600/90 rounded-full p-3 shadow-lg"><i data-lucide="play" class="w-6 h-6 text-white fill-white"></i></div>
                         </div>
                     </div>
-                    <div class="p-3">
+                    <div class="p-3 bg-white">
                         <h3 class="text-sm font-bold text-gray-900 leading-tight line-clamp-2 mb-1">${autoTitle}</h3>
-                        <p class="text-[11px] text-gray-500 font-medium">${autoViews} • Just now</p>
+                        <p class="text-[11px] text-gray-500 font-medium">${autoViews} • Exclusive</p>
                     </div>
                 `;
                 grid.appendChild(card);
