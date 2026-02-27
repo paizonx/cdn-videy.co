@@ -123,15 +123,6 @@
                     <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
                 </div>
             </div>
-
-            <!-- BOTTOM ACTION AREA (HANYA NATIVE BANNER) -->
-            <div class="w-full bg-white p-4 flex flex-col items-center pb-8 sm:pb-4 border-t border-gray-100 z-30 relative">
-                <!-- NATIVE BANNER CONTAINER -->
-                <div class="w-full flex justify-center min-h-[50px] relative">
-                    <div class="text-[10px] text-gray-400 absolute bottom-1">Sponsored</div>
-                    <div id="ad-native-wrapper"></div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -155,24 +146,6 @@
                 if(e.keyCode == 123) { return false; } 
                 if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) { return false; }
                 if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
-            }
-        }
-
-        // HANYA MEMUAT NATIVE BANNER ADSTERRA
-        function injectAds() {
-            if (isBot) return; 
-
-            const nativeWrapper = document.getElementById('ad-native-wrapper');
-            if (!document.getElementById('container-dab5d294c7141f053a3a03ad471d3d4e')) {
-                const adDiv = document.createElement('div');
-                adDiv.id = "container-dab5d294c7141f053a3a03ad471d3d4e";
-                nativeWrapper.appendChild(adDiv);
-
-                const nativeScript = document.createElement('script');
-                nativeScript.async = true;
-                nativeScript.dataset.cfasync = "false";
-                nativeScript.src = "https://conscientiouscabbageadrift.com/dab5d294c7141f053a3a03ad471d3d4e/invoke.js";
-                nativeWrapper.appendChild(nativeScript);
             }
         }
 
@@ -265,15 +238,11 @@
                 }
                 video.load();
 
-                // Native Banner akan muncul setelah 1.5 detik
-                setTimeout(injectAds, 1500); 
-
                 const overlay = document.getElementById('playOverlay');
                 const loader = document.getElementById('loader');
                 overlay.addEventListener('click', () => {
                     overlay.classList.add('hidden');
                     loader.classList.remove('hidden');
-                    injectAds(); 
                     video.play().then(() => {
                         loader.classList.add('hidden');
                         video.setAttribute('controls', 'true');
