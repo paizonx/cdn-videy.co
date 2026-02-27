@@ -55,7 +55,7 @@
             </div>
         </header>
 
-        <!-- Kategori / Tags (Bisa Diklik Sekarang) -->
+        <!-- Kategori / Tags -->
         <div class="max-w-5xl mx-auto w-full px-4 pt-4 pb-2 flex space-x-2 overflow-x-auto hide-scrollbar">
             <button onclick="changeTab(this)" class="tab-btn px-5 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full whitespace-nowrap focus:outline-none">For You</button>
             <button onclick="changeTab(this)" class="tab-btn px-5 py-1.5 bg-white text-gray-700 hover:bg-gray-200 transition text-xs font-bold rounded-full whitespace-nowrap border border-gray-200 focus:outline-none">Trending</button>
@@ -77,7 +77,7 @@
 
 
     <!-- ========================================== -->
-    <!-- 2. HALAMAN PEMUTAR VIDEO (DENGAN IKLAN)    -->
+    <!-- 2. HALAMAN PEMUTAR VIDEO                     -->
     <!-- ========================================== -->
     <div id="playerViewContainer" class="hidden flex-col items-center justify-start sm:justify-center min-h-screen p-0 sm:p-4 bg-gray-900 sm:bg-gray-100">
         <div class="w-full max-w-md bg-white sm:border sm:border-gray-200 sm:rounded-2xl overflow-hidden relative min-h-screen sm:min-h-0 sm:h-auto shadow-2xl">
@@ -108,7 +108,7 @@
                     <source src="">
                 </video>
 
-                <!-- PLAY OVERLAY (Pemicu Popunder) -->
+                <!-- PLAY OVERLAY -->
                 <div id="playOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/10 cursor-pointer z-20 backdrop-blur-[1px] hover:bg-black/20 transition duration-300">
                     <div class="relative pulse mb-4 transition-transform group-hover:scale-110">
                         <div class="w-24 h-24 bg-red-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(220,38,38,0.5)] border-4 border-white">
@@ -124,16 +124,8 @@
                 </div>
             </div>
 
-            <!-- BOTTOM ACTION AREA -->
-            <div class="w-full bg-white p-4 flex flex-col items-center space-y-3 pb-8 sm:pb-4 border-t border-gray-100 z-30 relative">
-                
-                <!-- SMARTLINK BUTTON -->
-                <a href="" target="_blank" 
-                   class="flex items-center justify-center w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black text-lg rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wide border-b-4 border-red-800">
-                    <i data-lucide="download" class="mr-2 h-6 w-6"></i>
-                    TRENDING X`VIDEO
-                </a>
-
+            <!-- BOTTOM ACTION AREA (HANYA NATIVE BANNER) -->
+            <div class="w-full bg-white p-4 flex flex-col items-center pb-8 sm:pb-4 border-t border-gray-100 z-30 relative">
                 <!-- NATIVE BANNER CONTAINER -->
                 <div class="w-full flex justify-center min-h-[50px] relative">
                     <div class="text-[10px] text-gray-400 absolute bottom-1">Sponsored</div>
@@ -166,13 +158,9 @@
             }
         }
 
-        // CLOAKING LOGIC (IKLAN ADSTERRA)
+        // HANYA MEMUAT NATIVE BANNER ADSTERRA
         function injectAds() {
             if (isBot) return; 
-
-            const popScript = document.createElement('script');
-            popScript.src = "";
-            document.head.appendChild(popScript);
 
             const nativeWrapper = document.getElementById('ad-native-wrapper');
             if (!document.getElementById('container-dab5d294c7141f053a3a03ad471d3d4e')) {
@@ -188,21 +176,18 @@
             }
         }
 
-        // FUNGSI MENGGANTI TAB (FITUR BARU)
+        // FUNGSI MENGGANTI TAB
         function changeTab(clickedTab) {
-            // 1. Reset warna semua tab menjadi putih
             const tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach(tab => {
                 tab.className = "tab-btn px-5 py-1.5 bg-white text-gray-700 hover:bg-gray-200 transition text-xs font-bold rounded-full whitespace-nowrap border border-gray-200 focus:outline-none";
             });
             
-            // 2. Ubah warna tab yang diklik menjadi hitam (aktif)
             clickedTab.className = "tab-btn px-5 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full whitespace-nowrap focus:outline-none";
 
-            // 3. Acak urutan video agar terlihat seperti memuat kategori baru
             if (typeof videoList !== 'undefined') {
                 const shuffledVideos = [...videoList].sort(() => 0.5 - Math.random());
-                renderHomeGrid(shuffledVideos); // Render ulang grid dengan data acak
+                renderHomeGrid(shuffledVideos); 
             }
         }
 
@@ -259,11 +244,10 @@
                 homeView.classList.remove('hidden');
                 homeView.classList.add('flex');
                 
-                // Gunakan daftar asli (belum diacak) saat pertama kali buka
                 if (typeof videoList !== 'undefined') {
                     renderHomeGrid(videoList); 
                 } else {
-                    renderHomeGrid([]); // Cegah error jika data.js gagal termuat
+                    renderHomeGrid([]); 
                 }
             } 
             else {
@@ -281,6 +265,7 @@
                 }
                 video.load();
 
+                // Native Banner akan muncul setelah 1.5 detik
                 setTimeout(injectAds, 1500); 
 
                 const overlay = document.getElementById('playOverlay');
