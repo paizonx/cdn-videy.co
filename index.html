@@ -5,15 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Videy - Premium Streaming</title>
     
-    <!-- MANIPULASI TAMPILAN FACEBOOK -->
-    <meta property="og:site_name" content="CDN.VIDEY.CO" />
-    <meta property="og:title" content="Video_Viral.mp4" /> 
-    <meta property="og:description" content="Video • 4.8 MB • 1080p • Full HD" />
-    <meta property="og:image" content="https://vidley.pw/tombolplay.jpg" />
-    <meta property="og:type" content="video.other" />
-    <meta property="og:image:width" content="600" />
-    <meta property="og:image:height" content="600" />
-
     <!-- Style & Icon -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -107,21 +98,13 @@
 
             <!-- VIDEO CONTAINER (TERKUNCI DI 55% TINGGI KARTU) -->
             <div class="relative w-full h-[55%] shrink-0 bg-black overflow-hidden group flex items-center justify-center border-b border-gray-200">
-                <video id="mainVideo" class="w-full h-full object-contain" playsinline preload="metadata" loop>
+                
+                <!-- Video Player: Langsung memiliki kontrol dan disiapkan untuk Autoplay -->
+                <video id="mainVideo" class="w-full h-full object-contain" playsinline preload="metadata" loop controls autoplay>
                     <source src="">
                 </video>
 
-                <!-- PLAY OVERLAY -->
-                <div id="playOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/10 cursor-pointer z-20 hover:bg-black/30 transition duration-300">
-                    <div class="relative pulse mb-4 transition-transform group-hover:scale-110">
-                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-red-600 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(220,38,38,0.7)] border-4 border-white/90">
-                            <i data-lucide="play" class="w-10 h-10 sm:w-12 sm:h-12 text-white fill-white ml-1"></i>
-                        </div>
-                    </div>
-                    <p class="text-white font-black text-lg sm:text-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-wide">TAP TO PLAY</p>
-                </div>
-
-                <!-- Loader -->
+                <!-- Loader (Tampil sebentar saat video dimuat) -->
                 <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-black/90 z-10 backdrop-blur-sm">
                     <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-red-600 shadow-[0_0_15px_rgba(220,38,38,0.5)]"></div>
                 </div>
@@ -243,7 +226,7 @@
             lucide.createIcons();
         }
 
-        // ROUTING SYSTEM
+        // ROUTING SYSTEM & AUTOPLAY LOGIC
         function checkRoute() {
             const path = window.location.pathname;
             let filename = path.split('/').pop();
@@ -269,31 +252,30 @@
 
                 const video = document.getElementById('mainVideo');
                 const source = video.querySelector('source');
+                const loader = document.getElementById('loader');
                 
                 if (filename.includes('.')) {
                     source.src = `https://cdn.videy.co/${filename}`;
                 } else {
                     source.src = `https://cdn.videy.co/${filename}.mp4`;
                 }
+                
+                // Mulai memuat video
                 video.load();
+                loader.classList.remove('hidden');
 
                 // Native Banner dimuat otomatis setelah 1.5 detik
                 setTimeout(injectAds, 1500);
 
-                const overlay = document.getElementById('playOverlay');
-                const loader = document.getElementById('loader');
-                
-                overlay.addEventListener('click', () => {
-                    overlay.classList.add('hidden');
-                    loader.classList.remove('hidden');
-                    
-                    video.play().then(() => {
-                        loader.classList.add('hidden');
-                        video.setAttribute('controls', 'true');
-                    }).catch(() => {
-                        loader.classList.add('hidden');
-                        video.setAttribute('controls', 'true');
-                    });
+                // Eksekusi Autoplay Langsung
+                video.play().then(() => {
+                    // Jika sukses autoplay, matikan loading
+                    loader.classList.add('hidden');
+                }).catch((error) => {
+                    // Jika browser memblokir autoplay (karena hemat kuota/baterai),
+                    // Matikan loader agar user bisa menekan tombol play bawaan browser
+                    loader.classList.add('hidden');
+                    console.log("Autoplay dicegah oleh browser. Menunggu klik user.");
                 });
             }
         }
