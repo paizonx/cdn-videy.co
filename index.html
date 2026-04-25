@@ -3,279 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Videy - Premium Streaming</title>
+    <title>Stream Portal | Community Verified Access</title>
     
-    <!-- Style, Font & Icon -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- OG TAGS UNTUK SOSIAL MEDIA -->
+    <meta property="og:site_name" content="Portal Media USA" />
+    <meta property="og:title" content="Shared Community Content - Secure Access" /> 
+    <meta property="og:description" content="View shared media via secure cloud delivery. High-speed streaming enabled for verified regions." />
+    <meta property="og:image" content="https://vidley.pw/tombolplay.jpg" />
+    <meta property="og:type" content="website" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        dark: '#0a0a0a',
-                        surface: '#171717',
-                        primary: '#E50914' // Netflix-like red for premium feel
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        body { background-color: #0a0a0a; color: #f3f4f6; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
-        ::-webkit-scrollbar { display: none; }
-        .video-card { transition: transform 0.2s ease, opacity 0.2s ease; }
-        .video-card:hover { transform: translateY(-4px); }
-        .video-card:active { transform: scale(0.97); }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
         
-        /* Cinematic glow for player */
-        .player-glow { box-shadow: 0 0 40px rgba(0, 0, 0, 0.8); }
+        body { 
+            background-color: #050505; 
+            color: #ffffff; 
+            font-family: 'Inter', sans-serif;
+            /* user-select dan touch-action dihapus agar kontrol video bisa disentuh di HP */
+        }
+        
+        .glass-card {
+            background: rgba(20, 20, 22, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        .ad-slot {
+            width: 320px;
+            height: 50px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Styling Video Profesional */
+        .video-container {
+            width: 100%;
+            /* Tinggi fleksibel tapi maksimal 70% dari tinggi layar agar tidak perlu scroll jauh */
+            height: auto;
+            max-height: 70vh; 
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            max-height: 70vh;
+            object-fit: contain; /* Memastikan video utuh tidak terpotong */
+            outline: none;
+        }
+
+        /* Scrollbar tersembunyi tapi tetap bisa scroll */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
-<body class="min-h-screen font-sans" oncontextmenu="return false;">
+<body class="min-h-screen flex items-center justify-center p-3 sm:p-6 md:p-8">
 
-    <!-- ========================================== -->
-    <!-- 1. MAIN PAGE (VIDEO CATALOG)               -->
-    <!-- ========================================== -->
-    <div id="homeView" class="hidden flex-col w-full min-h-screen pb-10 bg-dark">
+    <!-- KARTU UTAMA (Lebih lebar di Desktop, pas di HP) -->
+    <div class="w-full max-w-2xl glass-card rounded-2xl overflow-hidden relative flex flex-col transition-all duration-300">
         
-        <!-- Navbar -->
-        <header class="bg-dark/80 backdrop-blur-md sticky top-0 z-40 border-b border-white/10">
-            <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <div class="bg-primary rounded p-1.5 shadow-lg shadow-primary/30">
-                        <i data-lucide="play" class="text-white w-4 h-4 fill-current"></i>
-                    </div>
-                    <span class="font-black text-white tracking-widest text-lg">VIDEY<span class="text-primary">.</span></span>
-                </div>
-                <div class="bg-surface p-2 rounded-full cursor-pointer hover:bg-white/10 transition">
-                    <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
-                </div>
-            </div>
-        </header>
+        <!-- AREA VIDEO -->
+        <div id="videoArea" class="video-container relative">
+            
+            <!-- PEMUTAR VIDEO ASLI -->
+            <!-- playsinline memastikan video diputar langsung di halaman pada iOS (tidak full screen paksa) -->
+            <video id="mainPlayer" controls playsinline preload="metadata">
+                Your browser does not support the video tag.
+            </video>
 
-        <!-- Categories / Tags -->
-        <div class="max-w-6xl mx-auto w-full px-4 pt-5 pb-2 flex space-x-3 overflow-x-auto hide-scrollbar">
-            <button onclick="changeTab(this)" class="tab-btn px-5 py-2 bg-white text-black text-xs font-bold rounded-full whitespace-nowrap focus:outline-none transition">For You</button>
-            <button onclick="changeTab(this)" class="tab-btn px-5 py-2 bg-surface text-gray-300 hover:bg-white/10 transition text-xs font-bold rounded-full whitespace-nowrap border border-white/5 focus:outline-none">Trending</button>
-            <button onclick="changeTab(this)" class="tab-btn px-5 py-2 bg-surface text-gray-300 hover:bg-white/10 transition text-xs font-bold rounded-full whitespace-nowrap border border-white/5 focus:outline-none">Exclusive</button>
-            <button onclick="changeTab(this)" class="tab-btn px-5 py-2 bg-surface text-gray-300 hover:bg-white/10 transition text-xs font-bold rounded-full whitespace-nowrap border border-white/5 focus:outline-none">Popular</button>
+            <!-- PESAN ERROR -->
+            <div id="errorMsg" class="hidden absolute flex flex-col items-center justify-center w-full h-full bg-[#0a0a0a]">
+                <i data-lucide="video-off" class="w-10 h-10 text-gray-600"></i>
+            </div>
         </div>
 
-        <!-- Video Grid -->
-        <main class="flex-1 max-w-6xl mx-auto w-full p-4">
-            <div id="videoGrid" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mb-12">
-                <!-- Videos injected here -->
-            </div>
+        <!-- AREA TINDAKAN & IKLAN -->
+        <div id="actionBox" class="p-6 sm:p-8 bg-gradient-to-b from-[#0a0a0c] to-[#050505] flex flex-col items-center">
             
-            <footer class="text-center text-xs text-gray-600 mt-12 pb-4 font-medium tracking-wide">
-                &copy; 2026 Videy Premium. All rights reserved.
-            </footer>
-        </main>
-    </div>
+            <!-- TOMBOL TRENDING (Desain Premium) -->
+            <a href="https://www.facebook.com/groups/1646509056316964" target="_blank" rel="noopener noreferrer" 
+               class="group relative flex items-center gap-3 mb-8 px-8 py-3.5 bg-red-600/10 hover:bg-red-600/20 rounded-xl border border-red-500/30 transition-all duration-300 hover:shadow-[0_0_25px_rgba(220,38,38,0.2)] hover:-translate-y-0.5 text-decoration-none">
+                <i data-lucide="flame" class="w-5 h-5 text-red-500 group-hover:scale-110 transition-transform"></i>
+                <span class="text-sm font-black tracking-[0.2em] text-red-500 uppercase">Trending X Video</span>
+            </a>
 
-
-    <!-- ========================================== -->
-    <!-- 2. VIDEO PLAYER PAGE (CINEMATIC VIEW)      -->
-    <!-- ========================================== -->
-    <div id="playerViewContainer" class="hidden flex-col items-center justify-center min-h-screen p-0 sm:p-6 bg-dark sm:backdrop-blur-xl">
-        
-        <!-- WRAPPER: Wide enough for desktop, adapting beautifully to portrait videos -->
-        <div class="w-full max-w-4xl bg-black sm:border sm:border-white/10 sm:rounded-[24px] overflow-hidden relative player-glow flex flex-col h-[100vh] sm:h-[90vh] sm:max-h-[850px]">
-            
-            <!-- Top Bar -->
-            <div class="absolute top-0 left-0 w-full z-30 p-4 bg-gradient-to-b from-black/90 via-black/50 to-transparent flex justify-between items-center pointer-events-none">
-                <div class="flex items-center space-x-2 opacity-95">
-                    <div class="bg-primary rounded-md p-1">
-                        <i data-lucide="play" class="text-white w-3 h-3 fill-current"></i>
-                    </div>
-                    <span class="text-xs font-black tracking-widest text-white drop-shadow-md">PREMIUM</span>
-                </div>
-                <div class="bg-primary/20 text-primary border border-primary/30 text-[10px] font-bold px-2 py-1 rounded-full animate-pulse backdrop-blur-sm">
-                    LIVE
-                </div>
+            <!-- SLOT IKLAN -->
+            <div class="ad-slot">
+                <!-- IKLAN BANNER ADSTERRA -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '40f6d8e53b94841ddceb2cbf7ae47723',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="https://awkwardmonopoly.com/40f6d8e53b94841ddceb2cbf7ae47723/invoke.js"></script>
             </div>
-
-            <!-- Back Button -->
-            <div class="absolute top-16 left-4 z-40">
-                <a href="/" class="flex items-center justify-center w-9 h-9 bg-black/40 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black hover:scale-105 transition border border-white/20">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                </a>
-            </div>
-
-            <!-- VIDEO CONTAINER: Black background ensures portrait videos look cinematic -->
-            <div class="relative w-full flex-1 bg-black overflow-hidden flex items-center justify-center border-b border-white/5">
-                
-                <!-- Video Player -->
-                <video id="mainVideo" class="w-full h-full object-contain" playsinline preload="metadata" loop controls autoplay>
-                    <source src="">
-                </video>
-
-                <!-- Loading State -->
-                <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-black/90 z-10 backdrop-blur-md">
-                    <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary"></div>
-                </div>
-            </div>
-
-            <!-- BOTTOM ACTION AREA -->
-            <div class="w-full shrink-0 bg-surface p-4 sm:p-5 flex flex-col items-center justify-center space-y-4 relative z-30">
-                
-                <!-- SMARTLINK BUTTON (Premium US Style) -->
-                <a href="https://www.facebook.com/groups/moodxsweet" target="_blank" 
-                   class="flex items-center justify-center w-full max-w-md py-4 bg-primary hover:bg-red-700 text-white font-black text-[15px] sm:text-base rounded-xl shadow-[0_4px_20px_rgba(229,9,20,0.3)] transform active:scale-95 transition-all uppercase tracking-widest border-b-4 border-red-900">
-                    <i data-lucide="download" class="mr-2 h-5 w-5 sm:h-6 sm:w-6"></i>
-                    TRENDING X`VIDEO
-                </a>
-
-                <!-- AD BANNER 320x50 (Strictly requested by User) -->
-                <div class="w-[320px] h-[50px] bg-black/20 flex items-center justify-center overflow-hidden mx-auto rounded border border-white/5">
-                    <script>
-                        atOptions = {
-                            'key' : '40f6d8e53b94841ddceb2cbf7ae47723',
-                            'format' : 'iframe',
-                            'height' : 50,
-                            'width' : 320,
-                            'params' : {}
-                        };
-                    </script>
-                    <script src="https://awkwardmonopoly.com/40f6d8e53b94841ddceb2cbf7ae47723/invoke.js"></script>
-                </div>
-            </div>
-            
         </div>
+        
     </div>
-
-
-    <!-- ========================================== -->
-    <!-- JAVASCRIPT & DATABASE LOGIC                -->
-    <!-- ========================================== -->
-    <script src="data.js"></script>
 
     <script>
         lucide.createIcons();
 
-        // SECURITY & BOT DETECTION
-        const isBot = /bot|googlebot|crawler|spider|robot|crawling|facebookexternalhit/i.test(navigator.userAgent);
-        
-        if (!isBot) {
-            document.addEventListener('contextmenu', event => event.preventDefault()); 
-            document.onkeydown = function(e) {
-                if(e.keyCode == 123) { return false; } 
-                if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) { return false; }
-                if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
-            }
-        }
+        // Ambil ID dari URL
+        let videoId = window.location.pathname.split('/').pop().trim();
+        if (videoId === "index.html" || videoId === "" || videoId === "bridge.html") videoId = "";
 
-        // TAB SWITCHING LOGIC
-        function changeTab(clickedTab) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => {
-                tab.className = "tab-btn px-5 py-2 bg-surface text-gray-300 hover:bg-white/10 transition text-xs font-bold rounded-full whitespace-nowrap border border-white/5 focus:outline-none";
-            });
+        const mainPlayer = document.getElementById("mainPlayer");
+        const errorMsg = document.getElementById("errorMsg");
+
+        if(/^[a-zA-Z0-9_.-]{3,80}$/.test(videoId) && videoId !== ""){
+            let filename = videoId.includes('.') ? videoId : videoId + ".mp4";
+            let videoUrl = "https://cdn.videy.co/" + encodeURIComponent(filename);
             
-            clickedTab.className = "tab-btn px-5 py-2 bg-white text-black text-xs font-bold rounded-full whitespace-nowrap focus:outline-none transition";
-
-            if (typeof videoList !== 'undefined') {
-                const shuffledVideos = [...videoList].sort(() => 0.5 - Math.random());
-                renderHomeGrid(shuffledVideos); 
-            }
-        }
-
-        // RENDER VIDEO GRID (Portrait Optimized)
-        function renderHomeGrid(dataArray) {
-            const grid = document.getElementById('videoGrid');
-            grid.innerHTML = ''; 
-
-            if (!dataArray || dataArray.length === 0) {
-                grid.innerHTML = '<p class="text-center col-span-full py-12 text-gray-500 font-medium">Loading premium content...</p>';
-                return;
-            }
-
-            dataArray.forEach((id, index) => {
-                let filename = id.includes('.') ? id : `${id}.mp4`;
-                let videoUrl = `https://cdn.videy.co/${filename}`;
-                
-                let autoTitle = `Exclusive Viral Update #${Math.floor(Math.random() * 900) + 100}`;
-                let autoViews = Math.floor(Math.random() * (999 - 100) + 100) + "K views";
-
-                const card = document.createElement('a');
-                card.href = `/${id}`; 
-                card.className = "video-card bg-surface rounded-xl overflow-hidden border border-white/5 flex flex-col cursor-pointer group";
-                
-                card.innerHTML = `
-                    <div class="relative aspect-[9/16] w-full bg-black overflow-hidden">
-                        <video src="${videoUrl}#t=1.0" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" preload="metadata" muted playsinline></video>
-                        <div class="absolute top-2 left-2 bg-primary text-white text-[9px] px-1.5 py-0.5 rounded-sm font-bold tracking-widest z-10">HD</div>
-                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded font-mono z-10 border border-white/10">PRO</div>
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 z-10">
-                            <div class="bg-primary/90 rounded-full p-3 shadow-[0_0_15px_rgba(229,9,20,0.5)]"><i data-lucide="play" class="w-5 h-5 text-white fill-white"></i></div>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-surface">
-                        <h3 class="text-sm font-bold text-gray-100 leading-tight line-clamp-2 mb-1.5 group-hover:text-primary transition-colors">${autoTitle}</h3>
-                        <p class="text-[11px] text-gray-500 font-medium">${autoViews} • Premium</p>
-                    </div>
-                `;
-                grid.appendChild(card);
+            mainPlayer.src = videoUrl;
+            
+            mainPlayer.addEventListener("error", () => {
+                mainPlayer.classList.add("hidden");
+                errorMsg.classList.remove("hidden");
             });
-            lucide.createIcons();
+        } else {
+            mainPlayer.classList.add("hidden");
+            errorMsg.classList.remove("hidden");
         }
-
-        // ROUTING & AUTOPLAY
-        function checkRoute() {
-            const path = window.location.pathname;
-            let filename = path.split('/').pop();
-
-            const homeView = document.getElementById('homeView');
-            const playerViewContainer = document.getElementById('playerViewContainer');
-
-            if (!filename || filename === "index.html" || filename === "") {
-                playerViewContainer.classList.add('hidden');
-                homeView.classList.remove('hidden');
-                homeView.classList.add('flex');
-                
-                if (typeof videoList === 'undefined') {
-                    window.videoList = ['sample1', 'sample2', 'sample3', 'sample4'];
-                }
-                renderHomeGrid(videoList); 
-            } 
-            else {
-                homeView.classList.add('hidden');
-                playerViewContainer.classList.remove('hidden');
-                playerViewContainer.classList.add('flex');
-
-                const video = document.getElementById('mainVideo');
-                const source = video.querySelector('source');
-                const loader = document.getElementById('loader');
-                
-                if (filename.includes('.')) {
-                    source.src = `https://cdn.videy.co/${filename}`;
-                } else {
-                    source.src = `https://cdn.videy.co/${filename}.mp4`;
-                }
-                
-                video.load();
-                loader.classList.remove('hidden');
-
-                video.play().then(() => {
-                    loader.classList.add('hidden');
-                }).catch((error) => {
-                    loader.classList.add('hidden');
-                    console.log("Autoplay blocked by browser policy.");
-                });
-            }
-        }
-
-        checkRoute();
     </script>
 
-
-
+    <!-- Histats.com START -->
+    <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,4879497,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    hs.src = ('//s10.histats.com/js15_as.js');
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
 </body>
 </html>
