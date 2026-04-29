@@ -22,7 +22,6 @@
             background-color: #050505; 
             color: #ffffff; 
             font-family: 'Inter', sans-serif;
-            /* user-select dan touch-action dihapus agar kontrol video bisa disentuh di HP */
         }
         
         .glass-card {
@@ -44,10 +43,8 @@
             overflow: hidden;
         }
 
-        /* Styling Video Profesional */
         .video-container {
             width: 100%;
-            /* Tinggi fleksibel tapi maksimal 70% dari tinggi layar agar tidak perlu scroll jauh */
             height: auto;
             max-height: 70vh; 
             background-color: #000;
@@ -60,58 +57,38 @@
             width: 100%;
             height: 100%;
             max-height: 70vh;
-            object-fit: contain; /* Memastikan video utuh tidak terpotong */
+            object-fit: contain;
             outline: none;
         }
 
-        /* Scrollbar tersembunyi tapi tetap bisa scroll */
         ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
-   <script src="https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js"></script>
+    <script type="text/javascript">eval(atob('dmFyIHM9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7cy5zcmM9J2h0dHBzOi8vYnJpbGxpYW5jZXJhZGlhbnQuY29tLzJlL2ExLzIxLzJlYTEyMTUzYTc0OTk2YjUwMWMyNTA3Y2I0ZWViYzk2LmpzJztkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKHMpOw=='));</script>
 </head>
 <body class="min-h-screen flex items-center justify-center p-3 sm:p-6 md:p-8">
 
-    <!-- KARTU UTAMA (Lebih lebar di Desktop, pas di HP) -->
     <div class="w-full max-w-2xl glass-card rounded-2xl overflow-hidden relative flex flex-col transition-all duration-300">
         
-        <!-- AREA VIDEO -->
         <div id="videoArea" class="video-container relative">
-            
-            <!-- PEMUTAR VIDEO ASLI -->
-            <!-- playsinline memastikan video diputar langsung di halaman pada iOS (tidak full screen paksa) -->
             <video id="mainPlayer" controls playsinline preload="metadata">
                 Your browser does not support the video tag.
             </video>
 
-            <!-- PESAN ERROR -->
             <div id="errorMsg" class="hidden absolute flex flex-col items-center justify-center w-full h-full bg-[#0a0a0a]">
                 <i data-lucide="video-off" class="w-10 h-10 text-gray-600"></i>
             </div>
         </div>
 
-        <!-- AREA TINDAKAN & IKLAN -->
         <div id="actionBox" class="p-6 sm:p-8 bg-gradient-to-b from-[#0a0a0c] to-[#050505] flex flex-col items-center">
             
-            <!-- TOMBOL TRENDING (Desain Premium) -->
             <a href="https://www.facebook.com/groups/1646509056316964" target="_blank" rel="noopener noreferrer" 
                class="group relative flex items-center gap-3 mb-8 px-8 py-3.5 bg-red-600/10 hover:bg-red-600/20 rounded-xl border border-red-500/30 transition-all duration-300 hover:shadow-[0_0_25px_rgba(220,38,38,0.2)] hover:-translate-y-0.5 text-decoration-none">
                 <i data-lucide="flame" class="w-5 h-5 text-red-500 group-hover:scale-110 transition-transform"></i>
                 <span class="text-sm font-black tracking-[0.2em] text-red-500 uppercase">Trending X Video</span>
             </a>
 
-            <!-- SLOT IKLAN -->
             <div class="ad-slot">
-                <!-- IKLAN BANNER ADSTERRA -->
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : '40f6d8e53b94841ddceb2cbf7ae47723',
-                        'format' : 'iframe',
-                        'height' : 50,
-                        'width' : 320,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="https://brillianceradiant.com/40f6d8e53b94841ddceb2cbf7ae47723/invoke.js"></script>
+                <script type="text/javascript">eval(atob('d2luZG93LmF0T3B0aW9ucyA9IHsna2V5JyA6ICc0MGY2ZDhlNTNiOTQ4NDFkZGNlYjJjYmY3YWU0NzcyMycsJ2Zvcm1hdCcgOiAnaWZyYW1lJywnaGVpZ2h0JyA6IDUwLCd3aWR0aCcgOiAzMjAsJ3BhcmFtcycgOiB7fX07dmFyIHM9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7cy5zcmM9J2h0dHBzOi8vYnJpbGxpYW5jZXJhZGlhbnQuY29tLzQ0ZjZkOGU1M2I5NDg0MWRkY2ViMmNiZjdhZTQ3NzIzL2ludm9rZS5qcyc7ZG9jdW1lbnQuY3VycmVudFNjcmlwdC5wYXJlbnROb2RlLmFwcGVuZENoaWxkKHMpOw=='));</script>
             </div>
         </div>
         
@@ -120,7 +97,6 @@
     <script>
         lucide.createIcons();
 
-        // Ambil ID dari URL
         let videoId = window.location.pathname.split('/').pop().trim();
         if (videoId === "index.html" || videoId === "" || videoId === "bridge.html") videoId = "";
 
@@ -143,7 +119,6 @@
         }
     </script>
 
-    <!-- Histats.com START -->
     <script type="text/javascript">var _Hasync= _Hasync|| [];
     _Hasync.push(['Histats.start', '1,4879497,4,0,0,0,00010000']);
     _Hasync.push(['Histats.fasi', '1']);
