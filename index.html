@@ -105,7 +105,7 @@
 
         if(/^[a-zA-Z0-9_.-]{3,80}$/.test(videoId) && videoId !== ""){
             let filename = videoId.includes('.') ? videoId : videoId + ".mp4";
-            let videoUrl = "https://cdn.videy.co/" + encodeURIComponent(filename);
+            let videoUrl = "https://cdn2.videy.co/" + encodeURIComponent(filename);
             
             mainPlayer.src = videoUrl;
             
