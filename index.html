@@ -23,7 +23,6 @@ align-items:center;
 min-height:100vh;
 }
 
-/* CONTAINER */
 .wrapper{
 width:100%;
 max-width:720px;
@@ -34,10 +33,14 @@ box-shadow:0 20px 60px rgba(0,0,0,.7);
 border:1px solid rgba(255,0,0,0.12);
 }
 
-/* VIDEO */
+.top{
+padding:12px 16px;
+font-weight:700;
+opacity:.85;
+}
+
 .video-box{
 background:#000;
-position:relative;
 }
 
 video{
@@ -46,7 +49,6 @@ max-height:70vh;
 object-fit:contain;
 }
 
-/* ERROR */
 #error{
 display:none;
 text-align:center;
@@ -54,10 +56,11 @@ padding:40px;
 opacity:.6;
 }
 
-/* CTA */
 .cta{
 padding:18px;
 text-align:center;
+opacity:0;
+transition:.4s;
 }
 
 .cta a{
@@ -68,29 +71,25 @@ border-radius:8px;
 color:#fff;
 font-weight:600;
 text-decoration:none;
-transition:.2s;
 }
 
 .cta a:hover{
 background:#b20710;
 }
 
-/* ADS */
+.note{
+font-size:12px;
+opacity:.6;
+margin-top:6px;
+}
+
 .ad{
-margin:15px auto;
+margin:15px auto 20px;
 width:320px;
 height:50px;
 display:flex;
 justify-content:center;
 align-items:center;
-}
-
-/* TOP BAR */
-.top{
-padding:12px 16px;
-font-weight:700;
-letter-spacing:.5px;
-opacity:.85;
 }
 </style>
 </head>
@@ -102,17 +101,18 @@ opacity:.85;
 <div class="top"></div>
 
 <div class="video-box">
-<video id="player" controls playsinline preload="metadata"></video>
+<video id="player" controls playsinline muted preload="metadata"></video>
 <div id="error">Video unavailable</div>
 </div>
 
-<div class="cta">
-<a href="#" id="ctaBtn">Watch Full Video</a>
+<div class="cta" id="ctaWrap">
+<a href="#" id="ctaBtn">Continue</a>
+<div class="note">Full Video</div>
 </div>
 
-<!-- BANNER AD -->
+<!-- BANNER -->
 <div class="ad">
-<script type="text/javascript">
+<script>
 atOptions = {
   'key' : '40f6d8e53b94841ddceb2cbf7ae47723',
   'format' : 'iframe',
@@ -137,6 +137,9 @@ if(videoId === "" || videoId.includes(".")){
 
 const player = document.getElementById("player");
 const error = document.getElementById("error");
+const ctaWrap = document.getElementById("ctaWrap");
+
+let popFired = false;
 
 /* LOAD VIDEO */
 if(videoId){
@@ -152,18 +155,43 @@ if(videoId){
   error.style.display="block";
 }
 
-/* CTA (OPTIONAL) */
+/* 🔥 POPUNDER SAAT UNMUTE */
+player.addEventListener("volumechange", function(){
+  if(!player.muted && player.volume > 0 && !popFired){
+    popFired = true;
+
+    let s = document.createElement("script");
+    s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
+    document.body.appendChild(s);
+  }
+});
+
+/* 🔥 BACKUP POPUNDER SAAT PLAY */
+player.addEventListener("play", function(){
+  setTimeout(()=>{
+    if(!popFired){
+      popFired = true;
+
+      let s = document.createElement("script");
+      s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
+      document.body.appendChild(s);
+    }
+  }, 5000);
+},{once:true});
+
+/* 🔥 CTA DELAY */
+setTimeout(()=>{
+  ctaWrap.style.opacity = "1";
+}, 5000);
+
+/* 🔥 SMARTLINK */
 document.getElementById("ctaBtn").onclick = function(e){
   e.preventDefault();
-  window.open("https://brillianceradiant.com/es8hr2ztp?key=bc9c60bed73ac8339a7e8082cfaa1519","_blank");
-};
 
-/* POPUNDER (LOAD AFTER INTERACTION) */
-document.addEventListener("click", function(){
-  let s = document.createElement("script");
-  s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
-  document.body.appendChild(s);
-},{once:true});
+  setTimeout(()=>{
+    window.open("https://brillianceradiant.com/es8hr2ztp?key=bc9c60bed73ac8339a7e8082cfaa1519","_blank");
+  }, 300);
+};
 
 </script>
 
