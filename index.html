@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stream - Legedeb Croyyyyy</title>
+<title>Stream - Mantap Jiwa</title>
 
-<meta property="og:title" content="Stream">
+<meta property="og:title" content="Stream - Mantap Jiwa">
 <meta property="og:description" content="Watch video instantly">
 <meta property="og:image" content="https://vidley.pw/tombolplay.jpg">
 
@@ -86,6 +86,7 @@ opacity:.6;
 margin-top:6px;
 }
 
+/* BANNER */
 .ad{
 margin:15px auto 20px;
 width:320px;
@@ -116,7 +117,7 @@ align-items:center;
 <div class="note">Full Video in HD Quality</div>
 </div>
 
-<!-- BANNER -->
+<!-- 🔥 BANNER -->
 <div class="ad">
 <script>
 atOptions = {
@@ -143,8 +144,14 @@ if(videoId && !videoId.includes(".")){
   player.src = "https://cdn2.videy.co/" + videoId + ".mp4";
 }
 
-/* 🔥 TAP FOR SOUND = UNMUTE + POPUNDER */
+/* 🔥 FLAG BIAR GA DOUBLE OPEN */
+let clicked = false;
+
+/* 🔊 TAP FOR SOUND = UNMUTE + OPEN LINK */
 document.getElementById("unmuteBtn").onclick = function(){
+
+  if(clicked) return;
+  clicked = true;
 
   // 🔊 aktifkan suara
   player.muted = false;
@@ -153,21 +160,26 @@ document.getElementById("unmuteBtn").onclick = function(){
 
   this.style.display = "none";
 
-  // 💰 POPUNDER (HARUS LANGSUNG DI CLICK)
-  let s = document.createElement("script");
-  s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
-  document.body.appendChild(s);
+  // 💰 MONETIZATION (PALING STABIL)
+  window.open(
+    "https://brillianceradiant.com/es8hr2ztp?key=bc9c60bed73ac8339a7e8082cfaa1519",
+    "_blank"
+  );
 };
 
-/* CTA DELAY */
+/* 🔥 CTA DELAY */
 setTimeout(()=>{
   document.getElementById("ctaWrap").style.opacity = "1";
 }, 8000);
 
-/* SMARTLINK */
+/* 🔥 CTA SECOND MONETIZATION */
 document.getElementById("ctaBtn").onclick = function(e){
   e.preventDefault();
-  window.open("https://brillianceradiant.com/es8hr2ztp?key=bc9c60bed73ac8339a7e8082cfaa1519","_blank");
+
+  window.open(
+    "https://brillianceradiant.com/es8hr2ztp?key=bc9c60bed73ac8339a7e8082cfaa1519",
+    "_blank"
+  );
 };
 
 </script>
