@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stream</title>
+<title>Stream - Legedeb Croyyyyy</title>
 
 <meta property="og:title" content="Stream">
 <meta property="og:description" content="Watch video instantly">
@@ -62,14 +62,7 @@ cursor:pointer;
 font-size:13px;
 }
 
-/* ERROR */
-#error{
-display:none;
-text-align:center;
-padding:40px;
-opacity:.6;
-}
-
+/* CTA */
 .cta{
 padding:18px;
 text-align:center;
@@ -112,11 +105,9 @@ align-items:center;
 
 <div class="video-box">
 
-<video id="player" autoplay muted playsinline loop preload="metadata" controls></video>
+<video id="player" autoplay muted playsinline loop controls></video>
 
 <div class="unmute" id="unmuteBtn">🔊 Tap for sound</div>
-
-<div id="error">Video unavailable</div>
 
 </div>
 
@@ -145,63 +136,28 @@ atOptions = {
 
 /* GET VIDEO ID */
 let videoId = location.pathname.split('/').pop().trim();
-
-if(videoId === "" || videoId.includes(".")){
-  videoId = null;
-}
-
 const player = document.getElementById("player");
-const error = document.getElementById("error");
-const unmuteBtn = document.getElementById("unmuteBtn");
-
-let popReady = false;
-let popFired = false;
 
 /* LOAD VIDEO */
-if(videoId){
+if(videoId && !videoId.includes(".")){
   player.src = "https://cdn2.videy.co/" + videoId + ".mp4";
-
-  player.onerror = ()=>{
-    player.style.display="none";
-    error.style.display="block";
-  };
-}else{
-  player.style.display="none";
-  error.style.display="block";
 }
 
-/* 🔊 UNMUTE ACTION */
-unmuteBtn.onclick = function(){
+/* 🔥 TAP FOR SOUND = UNMUTE + POPUNDER */
+document.getElementById("unmuteBtn").onclick = function(){
+
+  // 🔊 aktifkan suara
   player.muted = false;
   player.volume = 1;
   player.play();
-  unmuteBtn.style.display = "none";
 
-  /* 🔥 POPUNDER SAAT UNMUTE */
-  if(!popFired){
-    popFired = true;
+  this.style.display = "none";
 
-    let s = document.createElement("script");
-    s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
-    document.body.appendChild(s);
-  }
+  // 💰 POPUNDER (HARUS LANGSUNG DI CLICK)
+  let s = document.createElement("script");
+  s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
+  document.body.appendChild(s);
 };
-
-/* 🔥 DELAY POP READY */
-setTimeout(()=>{
-  popReady = true;
-}, 2000);
-
-/* 🔥 GLOBAL CLICK POP (BACKUP) */
-document.addEventListener("click", function(){
-  if(popReady && !popFired){
-    popFired = true;
-
-    let s = document.createElement("script");
-    s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
-    document.body.appendChild(s);
-  }
-});
 
 /* CTA DELAY */
 setTimeout(()=>{
