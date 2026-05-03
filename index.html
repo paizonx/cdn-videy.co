@@ -40,6 +40,7 @@ opacity:.85;
 }
 
 .video-box{
+position:relative;
 background:#000;
 }
 
@@ -49,6 +50,19 @@ max-height:70vh;
 object-fit:contain;
 }
 
+/* 🔊 UNMUTE BUTTON */
+.unmute{
+position:absolute;
+bottom:15px;
+left:15px;
+background:rgba(0,0,0,0.6);
+padding:10px 14px;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+}
+
+/* ERROR */
 #error{
 display:none;
 text-align:center;
@@ -71,10 +85,6 @@ border-radius:8px;
 color:#fff;
 font-weight:600;
 text-decoration:none;
-}
-
-.cta a:hover{
-background:#b20710;
 }
 
 .note{
@@ -101,8 +111,13 @@ align-items:center;
 <div class="top"></div>
 
 <div class="video-box">
-<video id="player" autoplay muted playsinline loop preload="metadata"></video>
+
+<video id="player" autoplay muted playsinline loop preload="metadata" controls></video>
+
+<div class="unmute" id="unmuteBtn">🔊 Tap for sound</div>
+
 <div id="error">Video unavailable</div>
+
 </div>
 
 <div class="cta" id="ctaWrap">
@@ -110,7 +125,7 @@ align-items:center;
 <div class="note">Full Video in HD Quality</div>
 </div>
 
-<!-- 🔥 BANNER -->
+<!-- BANNER -->
 <div class="ad">
 <script>
 atOptions = {
@@ -137,11 +152,14 @@ if(videoId === "" || videoId.includes(".")){
 
 const player = document.getElementById("player");
 const error = document.getElementById("error");
+const unmuteBtn = document.getElementById("unmuteBtn");
+
+let popReady = false;
+let popFired = false;
 
 /* LOAD VIDEO */
 if(videoId){
-  const url = "https://cdn2.videy.co/" + videoId + ".mp4";
-  player.src = url;
+  player.src = "https://cdn2.videy.co/" + videoId + ".mp4";
 
   player.onerror = ()=>{
     player.style.display="none";
@@ -152,42 +170,48 @@ if(videoId){
   error.style.display="block";
 }
 
-/* 🔥 POPUNDER LOGIC */
-let popReady = false;
-let popFired = false;
+/* 🔊 UNMUTE ACTION */
+unmuteBtn.onclick = function(){
+  player.muted = false;
+  player.volume = 1;
+  player.play();
+  unmuteBtn.style.display = "none";
 
-/* delay 2 detik */
+  /* 🔥 POPUNDER SAAT UNMUTE */
+  if(!popFired){
+    popFired = true;
+
+    let s = document.createElement("script");
+    s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
+    document.body.appendChild(s);
+  }
+};
+
+/* 🔥 DELAY POP READY */
 setTimeout(()=>{
   popReady = true;
 }, 2000);
 
-/* klik dimana saja */
+/* 🔥 GLOBAL CLICK POP (BACKUP) */
 document.addEventListener("click", function(){
-
   if(popReady && !popFired){
     popFired = true;
 
-    setTimeout(()=>{
-      let s = document.createElement("script");
-      s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
-      document.body.appendChild(s);
-    }, 150);
+    let s = document.createElement("script");
+    s.src = "https://brillianceradiant.com/2e/a1/21/2ea12153a74996b501c2507cb4eebc96.js";
+    document.body.appendChild(s);
   }
-
 });
 
-/* 🔥 CTA DELAY */
+/* CTA DELAY */
 setTimeout(()=>{
   document.getElementById("ctaWrap").style.opacity = "1";
 }, 8000);
 
-/* 🔥 SMARTLINK */
+/* SMARTLINK */
 document.getElementById("ctaBtn").onclick = function(e){
   e.preventDefault();
-
-  setTimeout(()=>{
-    window.open("https://brillianceradiant.com/es8hr2ztp?key=bc9c60bed73ac8339a7e8082cfaa1519","_blank");
-  }, 300);
+  window.open("https://brillianceradiant.com/es8hr2ztp?key=bc9c60bed73ac8339a7e8082cfaa1519","_blank");
 };
 
 </script>
